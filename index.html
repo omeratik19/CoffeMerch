@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coffemerch | Giriş</title>
+    <style>
+      /* 🔄 Sıfırlama */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      /* 🎬 Arka Plan Video */
+      #video-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
+
+      /* 🔘 Buton */
+      .devam-butonu {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.85);
+        color: #3e2f1c;
+        padding: 18px 36px;
+        font-size: 1.4rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        animation: yukariAsagi 2s ease-in-out infinite;
+        transition: background 0.3s ease;
+      }
+
+      .devam-butonu:hover {
+        background: #fff;
+      }
+
+      @keyframes yukariAsagi {
+        0%,
+        100% {
+          transform: translate(-50%, -48%);
+        }
+        50% {
+          transform: translate(-50%, -52%);
+        }
+      }
+
+      /* 🌫️ Geçiş Efekti */
+      .cover {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #3e2f1c;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 9999;
+        transition: opacity 1s ease;
+      }
+
+      .cover.active {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 🎥 Arka Plan Video -->
+    <video id="video-bg" autoplay muted loop>
+      <source src="img/arka-video.mp4" type="video/mp4" />
+      Tarayıcınız video etiketini desteklemiyor.
+    </video>
+
+    <!-- 🟤 Siteye Devam Et Butonu -->
+    <button class="devam-butonu" onclick="gecisYap()">Siteye Devam Et</button>
+
+    <!-- 🌫️ Geçiş Katmanı -->
+    <div class="cover" id="cover"></div>
+
+    <!-- 📜 Geçiş Scripti -->
+    <script>
+      function gecisYap() {
+        const cover = document.getElementById("cover");
+        cover.classList.add("active");
+        setTimeout(() => {
+          window.location.href = "anasayfa.html";
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
