@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | Coffemerch</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Georgia", serif;
+        background: #2f1e13;
+        color: #f3ede7;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* GEÇİŞ KATLARI */
+      .gecis-kaplama,
+      .cikis-kaplama {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: #3e2f1c;
+        z-index: 9999;
+        pointer-events: none;
+        transition: transform 1s ease;
+      }
+
+      .gecis-kaplama {
+        top: 0;
+        left: 0;
+        transform: translateY(-100%);
+      }
+
+      .gecis-kaplama.goster {
+        transform: translateY(0%);
+      }
+
+      .cikis-kaplama {
+        bottom: 0;
+        left: 0;
+        transform: translateY(100%);
+      }
+
+      .cikis-kaplama.goster {
+        transform: translateY(0%);
+      }
+
+      /* DUMANLAR */
+      .duman {
+        position: fixed;
+        top: 0;
+        width: 150px;
+        height: 150px;
+        background: radial-gradient(white 10%, transparent 70%);
+        opacity: 0.2;
+        animation: dumanYukari 8s infinite linear;
+        filter: blur(20px);
+        z-index: 0;
+      }
+
+      .duman:nth-child(3) {
+        left: 20%;
+        animation-delay: 0s;
+      }
+      .duman:nth-child(4) {
+        left: 40%;
+        animation-delay: 2s;
+      }
+      .duman:nth-child(5) {
+        left: 60%;
+        animation-delay: 4s;
+      }
+      .duman:nth-child(6) {
+        left: 80%;
+        animation-delay: 6s;
+      }
+
+      @keyframes dumanYukari {
+        0% {
+          transform: translateY(100vh) scale(1);
+          opacity: 0.2;
+        }
+        100% {
+          transform: translateY(-200px) scale(2);
+          opacity: 0;
+        }
+      }
+
+      /* İÇERİK */
+      .icerik {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        padding: 80px 20px 40px;
+        max-width: 1200px;
+        margin: auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.8rem;
+        color: #d6bfa8;
+        margin-bottom: 30px;
+      }
+
+      .filtreler {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .filtreler button {
+        margin: 5px;
+        padding: 10px 18px;
+        border: none;
+        background: #ffddaf;
+        color: #3e2f1c;
+        font-weight: bold;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .filtreler button:hover {
+        background: #f1c987;
+      }
+
+      .yazi {
+        display: flex;
+        background: rgba(255, 255, 255, 0.05);
+        margin-bottom: 30px;
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 4px solid #ffddaf;
+        animation: fadeIn 1s ease forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .yazi.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .yazi img {
+        width: 140px;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-right: 20px;
+      }
+
+      .yazi .bilgi {
+        flex: 1;
+      }
+
+      .yazi h2 {
+        color: #ffddaf;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      .yazi p {
+        color: #f8f5f0;
+        font-family: "Segoe UI", sans-serif;
+        line-height: 1.6;
+      }
+
+      .devami {
+        margin-top: 10px;
+        color: #ffddaf;
+        cursor: pointer;
+        font-weight: bold;
+        display: inline-block;
+      }
+
+      .geri-butonu {
+        display: block;
+        text-align: center;
+        margin: 50px auto;
+        padding: 12px 24px;
+        background-color: #ffddaf;
+        color: #3e2f1c;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 30px;
+        transition: 0.3s;
+        width: fit-content;
+        cursor: pointer;
+      }
+
+      .geri-butonu:hover {
+        background-color: #f1c987;
+      }
+
+      @media (max-width: 768px) {
+        .yazi {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+
+        .yazi img {
+          margin: 0 0 15px 0;
+        }
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- GEÇİŞ & DUMAN -->
+    <div class="gecis-kaplama" id="gecis"></div>
+    <div class="cikis-kaplama" id="cikis"></div>
+    <div class="duman"></div>
+    <div class="duman"></div>
+    <div class="duman"></div>
+    <div class="duman"></div>
+
+    <!-- İÇERİK -->
+    <div class="icerik" id="icerik">
+      <h1>☕ Coffemerch Blog</h1>
+
+      <!-- FİLTRE -->
+      <div class="filtreler">
+        <button onclick="filtrele('tum')">Tümü</button>
+        <button onclick="filtrele('demleme')">Demleme</button>
+        <button onclick="filtrele('cekirdek')">Çekirdek</button>
+        <button onclick="filtrele('hikaye')">Hikaye</button>
+      </div>
+
+      <!-- YAZILAR -->
+      <div class="yazi demleme">
+        <img
+          src="https://cdn.pixabay.com/photo/2016/11/29/12/54/coffee-1869799_960_720.jpg"
+          alt="kahve"
+        />
+        <div class="bilgi">
+          <h2>Kahve Demlemenin İncelikleri</h2>
+          <p>
+            Kahve demlemek bir sanattır. Suyun sıcaklığı, öğütme boyutu ve
+            demleme süresi her şeyi etkiler.
+          </p>
+          <span class="devami" onclick="alert('Bu yazının devamı yakında!')"
+            >Devamını Oku</span
+          >
+        </div>
+      </div>
+
+      <div class="yazi cekirdek">
+        <img
+          src="https://cdn.pixabay.com/photo/2015/06/24/16/36/coffee-820657_960_720.jpg"
+          alt="çekirdek"
+        />
+        <div class="bilgi">
+          <h2>Arabica mı Robusta mı?</h2>
+          <p>
+            Arabica aromatik, Robusta tok ve güçlü. İkisinin de yeri ayrı, damak
+            zevki karar verir.
+          </p>
+          <span class="devami" onclick="alert('Bu yazının devamı yakında!')"
+            >Devamını Oku</span
+          >
+        </div>
+      </div>
+
+      <div class="yazi hikaye">
+        <img
+          src="https://cdn.pixabay.com/photo/2020/09/03/09/46/coffee-5538410_960_720.jpg"
+          alt="hikaye"
+        />
+        <div class="bilgi">
+          <h2>Çekirdekten Fincana</h2>
+          <p>
+            Kahve çekirdeği toplanır, kavrulur ve fincana ulaşır. Bu yolculukta
+            birçok sır gizli.
+          </p>
+          <span class="devami" onclick="alert('Bu yazının devamı yakında!')"
+            >Devamını Oku</span
+          >
+        </div>
+      </div>
+
+      <!-- GERİ BUTON -->
+      <div class="geri-butonu" onclick="geriDon()">🏠 Ana Sayfaya Dön</div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+      // Giriş efekti çalıştır
+      window.addEventListener("load", () => {
+        const gecis = document.getElementById("gecis");
+        gecis.classList.add("goster");
+
+        setTimeout(() => {
+          // geri yukarı çıkma animasyonu
+          gecis.classList.remove("goster");
+
+          setTimeout(() => {
+            gecis.style.display = "none";
+            document.getElementById("icerik").style.opacity = "1";
+            document.querySelectorAll(".yazi").forEach((el, i) => {
+              setTimeout(() => el.classList.add("show"), i * 200);
+            });
+          }, 1000);
+        }, 1000);
+      });
+
+      // Çıkış efektiyle yönlendirme
+      function geriDon() {
+        const cikis = document.getElementById("cikis");
+        cikis.classList.add("goster");
+        setTimeout(() => {
+          window.location.href = "anasayfa.html";
+        }, 800);
+      }
+
+      // Filtre
+      function filtrele(kategori) {
+        document.querySelectorAll(".yazi").forEach((el) => {
+          if (kategori === "tum" || el.classList.contains(kategori)) {
+            el.style.display = "flex";
+          } else {
+            el.style.display = "none";
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

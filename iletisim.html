@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İletişim | Coffemerch</title>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #504c10;
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Soluk arka plan görseli */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("img/iletisim.jpg") no-repeat center center / cover;
+      opacity: 0.2;
+      z-index: -1;
+    }
+
+    .gecis-kaplama,
+    .cikis-kaplama {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #3e2f1c;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .gecis-kaplama {
+      top: -100%;
+    }
+
+    .cikis-kaplama {
+      bottom: -100%;
+    }
+
+    @keyframes gecisEfekt {
+      0% { top: -100%; }
+      60% { top: 0; }
+      100% { top: -100%; }
+    }
+
+    @keyframes cikisEfektTekYon {
+      0% { bottom: -100%; }
+      100% { bottom: 0; }
+    }
+
+    .gecis-kaplama.acik {
+      animation: gecisEfekt 1.2s ease forwards;
+    }
+
+    .cikis-kaplama.acik {
+      animation: cikisEfektTekYon 0.8s ease forwards;
+    }
+
+    .icerik {
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      opacity: 0;
+      position: relative;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .icerik.goster {
+      opacity: 1;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.8rem;
+      margin-bottom: 150px; /* Butonlar büyük, aralık da arttı */
+      color: rgba(247, 241, 193, 0.8);
+      position: relative;
+      width: 100%;
+    }
+
+    h1::after {
+      content: "";
+      width: 150px;
+      height: 4px;
+      background: rgba(184, 179, 135, 0.8)#ffd700;
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* Butonları yan yana koymak için flexbox */
+    .kutular {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px; /* Butonlar büyüdü, boşluk da büyütüldü */
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 50px;
+    }
+
+    .kutu {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0; /* padding kaldırıldı, ikon direkt büyük */
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+      width: 180px;
+      height: 180px; /* Kare şeklinde büyük */
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    /* Buton hover efekti */
+    .kutu:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .icerik.goster .kutu {
+      opacity: 1;
+    }
+
+    .kutu img.icon {
+      width: 90px;
+      height: 90px;
+      pointer-events: none;
+      user-select: none;
+      filter: none; /* Default filter sıfırlandı */
+    }
+
+    /* WhatsApp kutusu arka plan ve border eski hali */
+    .kutu.whatsapp {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.4);
+    }
+
+    /* WhatsApp ikonu yeşil (#25D366) */
+    .kutu.whatsapp img.icon {
+      filter: brightness(0) saturate(100%) invert(54%) sepia(86%) saturate(400%) hue-rotate(90deg) brightness(110%) contrast(95%);
+    }
+
+    /* Linkleri kapla tüm kutu */
+    .kutu a {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      color: inherit;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    /* Destek maili altına taşı */
+    .eposta-btn {
+      display: inline-block;
+      margin: 75px auto;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffd700;
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      backdrop-filter: blur(8px);
+      transition: 0.3s ease;
+      cursor: pointer;
+      user-select: text;
+      font-size: 1.1rem;
+    }
+
+    .eposta-btn:hover {
+      background: #ffd700;
+      color: #000;
+    }
+
+    .buton {
+      background: #ffd700;
+      color: #000;
+      font-weight: bold;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+      user-select: none;
+      margin-bottom: 30px;
+    }
+
+    .buton:hover {
+      transform: scale(1.07);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #ccc;
+      width: 100%;
+    }
+
+    footer a {
+      color: #ffd700;
+      text-decoration: none;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive için ufak ayar */
+    @media (max-width: 520px) {
+      .kutular {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .kutu {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 25px;
+      }
+
+      h1 {
+        margin-bottom: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="gecis-kaplama" id="gecisKaplama"></div>
+  <div class="cikis-kaplama" id="cikisKaplama"></div>
+
+  <div class="icerik" id="icerik">
+    <h1>Bizimle İletişime Geç</h1>
+
+    <div class="kutular">
+      <div class="kutu">
+        <a href="https://maps.google.com/?q=Ömerağa mahallesi Alemdar Caddesi Erdem İş Merkezi No : 3/11, İzmit 41000" target="_blank" aria-label="Konum">
+          <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" class="icon" alt="Konum" />
+        </a>
+      </div>
+
+      <div class="kutu whatsapp">
+        <a href="https://wa.me/905412554199" target="_blank" aria-label="WhatsApp">
+          <img src="https://cdn-icons-png.flaticon.com/512/1384/1384023.png" class="icon" alt="WhatsApp" />
+        </a>
+      </div>
+
+      <div class="kutu">
+        <a href="tel:+905412554199" aria-label="Telefon">
+          <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" class="icon" alt="Telefon" />
+        </a>
+      </div>
+
+      <div class="kutu">
+        <a href="https://www.instagram.com/coffemerch/" target="_blank" aria-label="Instagram">
+          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="icon" alt="Instagram" />
+        </a>
+      </div>
+    </div>
+
+    <a class="eposta-btn" href="mailto:destek@coffemerch.com">✉️ destek@coffemerch.com</a>
+
+    <button class="buton" onclick="anasayfayaDon()">Ana Sayfaya Dön</button>
+  </div>
+
+  <footer>
+    <p>Danışmanlık ücretsizdir.</p>
+    <p>Bu site <strong>Atk Codes</strong> tarafından yazılıp tasarlanmıştır.</p>
+    <p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"
+        style="width: 18px; height: 18px; vertical-align: middle; margin-right: 6px;" />
+      Instagram:
+      <a href="https://instagram.com/atkcodes" target="_blank">@atkcodes</a>
+    </p>
+  </footer>
+
+  <script>
+    window.addEventListener("load", () => {
+      const gecis = document.getElementById("gecisKaplama");
+      gecis.classList.add("acik");
+      setTimeout(() => {
+        gecis.classList.remove("acik");
+        document.getElementById("icerik").classList.add("goster");
+      }, 1200);
+    });
+
+    function anasayfayaDon() {
+      const cikis = document.getElementById("cikisKaplama");
+      cikis.classList.add("acik");
+      setTimeout(() => {
+        window.location.href = "anasayfa.html";
+      }, 800);
+    }
+  </script>
+</body>
+</html>
+

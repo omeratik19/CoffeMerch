@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ürünlerimiz | Coffemerch</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: url("img/portofiltre.png") no-repeat center center fixed;
+        background-size: cover;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("img/portofiltre.png") no-repeat center center;
+        background-size: contain;
+        opacity: 0.08;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* 🎬 Geçiş Efekti */
+      .gecis-kaplama {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #3e2f1c;
+        z-index: 9999;
+        animation: slideBounce 1.2s ease forwards;
+      }
+
+      @keyframes slideBounce {
+        0% {
+          transform: translateY(-100%);
+        }
+        50% {
+          transform: translateY(0%);
+        }
+        100% {
+          transform: translateY(-100%);
+        }
+      }
+
+      .cikis-kaplama {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #3e2f1c;
+        z-index: 9999;
+        transform: translateY(100%);
+      }
+
+      .cikis-kaplama.aktif {
+        animation: slideOut 1s forwards;
+      }
+
+      @keyframes slideOut {
+        0% {
+          transform: translateY(100%);
+        }
+        100% {
+          transform: translateY(0%);
+        }
+      }
+
+      .sayfa-icerik {
+        opacity: 0;
+        transition: opacity 0.6s ease-in-out;
+        padding: 60px 20px 40px;
+        animation: fadeUp 1s ease-in-out 1.2s forwards;
+        z-index: 1;
+        position: relative;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .sayfa-baslik {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #efeeec;
+        margin-bottom: 50px;
+        position: relative;
+      }
+
+      .sayfa-baslik::after {
+        content: "";
+        display: block;
+        width: 80px;
+        height: 3px;
+        background-color: #faf8f7;
+        margin: 10px auto 0;
+        border-radius: 2px;
+      }
+
+      .kart {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 40px;
+        max-width: 1200px;
+        margin: 60px auto;
+        background: rgba(179, 131, 69, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(236, 229, 229, 0.1);
+        position: relative;
+        flex-wrap: wrap;
+        transition: transform 0.3s ease;
+      }
+
+      .kart:hover {
+        transform: scale(1.02);
+      }
+
+      .kart .sol {
+        flex: 1;
+        padding-right: 40px;
+      }
+
+      .kart h2 {
+        font-family: "Georgia", serif;
+        font-size: 2.6rem;
+        color: #fcfbfa;
+        margin-bottom: 20px;
+      }
+
+      .kart p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #ebeae9;
+      }
+
+      .kart .sag {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .kart .sag img {
+        max-width: 61%;
+        border-radius: 28px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .kart .cizimler {
+        display: flex;
+        gap: 5px;
+        margin-top: 16px;
+      }
+
+      .kart .cizimler img {
+        width: 200px;
+        height: 200px;
+      }
+
+      .geri-butonu {
+        text-align: center;
+        margin-top: 60px;
+      }
+
+      .geri-butonu button {
+        background-color: #3e2f1c;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .geri-butonu button:hover {
+        background-color: #5a3d25;
+      }
+
+      @media (max-width: 768px) {
+        .kart {
+          flex-direction: column;
+          padding: 20px;
+          margin: 40px 20px;
+        }
+
+        .kart .sol {
+          padding-right: 0;
+        }
+
+        .kart h2 {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="gecis-kaplama" id="girisKaplama"></div>
+    <div class="cikis-kaplama" id="cikisKaplama"></div>
+
+    <div class="sayfa-icerik" id="icerik">
+      <h1 class="sayfa-baslik">☕ Ürünlerimiz</h1>
+
+      <!-- MONARCH -->
+      <div class="kart">
+        <div class="sol">
+          <h2>MONARCH</h2>
+          <p>
+            Monarch, Kongo'nun verimli topraklarında yetişen ve yüksek kalite
+            standartlarına sahip bir kahve çekirdeğidir. Yıkanmış işlem tipi ile
+            öne çıkan bu kahve, 1800-2000 metre arasındaki rakımlarda
+            yetiştirilerek, parlak bir asiditeye ve dengeli bir gövdeye sahip
+            olur. Sofistike tadım profili, her yudumda zengin ve tatmin edici
+            bir deneyim sunar.
+          </p>
+        </div>
+        <div class="sag">
+          <div class="cizimler">
+            <img
+              src="img/pexels-pavel-danilyuk-6612674.jpg"
+              alt="Kahve Fincanı"
+            />
+            <img
+              src="img/shaker-icki-karistirici-350-cc-kokteyl-shaker-zicco-79163-75-B.jpg"
+              alt="Shake Bardak"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- COLOMBIA -->
+      <div class="kart">
+        <div class="sol">
+          <h2>Colombia Supremo</h2>
+          <p>
+            Dengeli gövde ve çikolata notalarıyla %100 Arabica çekirdeklerinden
+            oluşur. Yüksek rakımda yetiştirilen bu çekirdekler, tatlı ve
+            meyvemsi bir karakter sunar. French Press ve filtre kahve için
+            mükemmel bir seçimdir.
+          </p>
+        </div>
+        <div class="sag">
+          <img src="img/colombia.jpg" alt="Colombia Kahvesi" />
+          <div class="cizimler">
+            <img src="img/coffee-cup.png" alt="Fincan" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ETHIOPIA -->
+      <div class="kart">
+        <div class="sol">
+          <h2>Ethiopia Yirgacheffe</h2>
+          <p>
+            Narenciye ve çiçek aromaları içeren yıkanmış Arabica çekirdekleri.
+            Limon, bergamot ve floral tatlar ile zengin bir deneyim sunar. V60
+            ve pour-over demleme yöntemleri için önerilir.
+          </p>
+        </div>
+        <div class="sag">
+          <img src="assets/ethiopia.jpg" alt="Ethiopia Kahvesi" />
+          <div class="cizimler">
+            <img src="assets/coffee-cup.png" alt="Fincan" />
+          </div>
+        </div>
+      </div>
+
+      <!-- BRAZIL -->
+      <div class="kart">
+        <div class="sol">
+          <h2>Brazil Santos</h2>
+          <p>
+            Düşük asidite, fındık ve kakao aromalarıyla yumuşak içim sunar.
+            Doğal işlem görmüş bu çekirdekler, espresso ve mokapot için harika
+            sonuçlar verir.
+          </p>
+        </div>
+        <div class="sag">
+          <img src="assets/brazil.jpg" alt="Brazil Kahvesi" />
+          <div class="cizimler">
+            <img src="assets/shake-glass.png" alt="Shake" />
+          </div>
+        </div>
+      </div>
+
+      <div class="geri-butonu">
+        <button onclick="sayfayiKapat()">← Ana Sayfaya Dön</button>
+      </div>
+    </div>
+
+    <script>
+      window.addEventListener("load", () => {
+        const giris = document.getElementById("girisKaplama");
+        const icerik = document.getElementById("icerik");
+
+        setTimeout(() => {
+          giris.style.display = "none";
+          icerik.classList.add("goster");
+        }, 1200);
+      });
+
+      function sayfayiKapat() {
+        const cikis = document.getElementById("cikisKaplama");
+        cikis.classList.add("aktif");
+
+        setTimeout(() => {
+          window.location.href = "anasayfa.html";
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>

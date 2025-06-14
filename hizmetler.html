@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coffeemerch | Hizmetler</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 40px;
+        color: #4b3b2b;
+        background: url("img/hizmet.jpg") no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0);
+        z-index: -1;
+      }
+
+      /* 🎬 Giriş Katmanı: Yukarıdan aşağı inip geri çıkan efekt */
+      .gecis-kaplama {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #3e2f1c;
+        z-index: 9999;
+        animation: kayBounce 1.5s forwards;
+      }
+
+      @keyframes kayBounce {
+        0% {
+          transform: translateY(-100%);
+        }
+        50% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-100%);
+        }
+      }
+
+      /* 🎬 Çıkış Katmanı: Aşağıdan yukarıya çıkan efekt */
+      .cikis-kaplama {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #3e2f1c;
+        z-index: 9999;
+        transform: translateY(100%);
+      }
+
+      .cikis-kaplama.aktif {
+        animation: kaplamaAsagi 1s forwards;
+      }
+
+      @keyframes kaplamaAsagi {
+        0% {
+          transform: translateY(100%);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.8rem;
+        color: #7c6a52;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .flip-card {
+        background-color: transparent;
+        perspective: 1000px;
+        cursor: pointer;
+      }
+
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 240px;
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        background: #fff;
+      }
+
+      .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flip-card-front,
+      .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 240px;
+        backface-visibility: hidden;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .custom-bg {
+        justify-content: flex-end;
+        align-items: center;
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        overflow: hidden;
+      }
+
+      .custom-bg .card-title-bottom {
+        background: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+        font-size: 1.6rem;
+        font-weight: 700;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
+
+      .flip-card-front.danismanlik {
+        background-image: url("img/ilkkart.jpg");
+      }
+
+      .flip-card-front.arastirma {
+        background-image: url("img/arastirma.jpg");
+      }
+
+      .flip-card-front.urun {
+        background-image: url("img/urun.jpg");
+      }
+
+      .flip-card-front.tedarik {
+        background-image: url("img/tedarik.jpg");
+      }
+
+      .flip-card-front.egitim {
+        background-image: url("img/egitim.jpg");
+      }
+
+      .flip-card-front.etik {
+        background-image: url("img/etik.jpg");
+      }
+
+      .flip-card-front:not(.custom-bg) {
+        background: #bb660c;
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.6rem;
+        box-shadow: 0 6px 12px rgba(187, 102, 12, 0.4);
+      }
+
+      .icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+      }
+
+      .flip-card-back {
+        background: #f4f2f0;
+        color: #4b3b2b;
+        transform: rotateY(180deg);
+        font-size: 1rem;
+        line-height: 1.4;
+        font-weight: 500;
+        box-shadow: 0 6px 12px rgba(123, 101, 68, 0.2);
+        text-align: center;
+        padding: 25px 20px;
+      }
+
+      .flip-card-back h3 {
+        margin-bottom: 15px;
+        font-weight: 700;
+        color: #7c6a52;
+      }
+
+      .back-button {
+        display: block;
+        width: 200px;
+        margin: 50px auto 0;
+        padding: 15px 0;
+        background-color: #bb660c;
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 4px 8px rgba(187, 102, 12, 0.5);
+        transition: background-color 0.3s ease;
+      }
+
+      .back-button:hover {
+        background-color: #d2872a;
+      }
+
+      @media (max-width: 900px) {
+        .container {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          grid-template-columns: 1fr;
+        }
+        body {
+          margin: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Giriş ve Çıkış Katmanları -->
+    <div class="gecis-kaplama" id="girisKaplama"></div>
+    <div class="cikis-kaplama" id="cikisKaplama"></div>
+
+    <h1>Hizmetlerimiz</h1>
+    <div class="container">
+      <!-- Danışmanlık -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front custom-bg danismanlik">
+            <div class="card-title-bottom">Danışmanlık</div>
+          </div>
+          <div class="flip-card-back">
+            <h3>Dijital Pazarlama Danışmanlığı</h3>
+            <p>
+              Markanızı dijital dünyada görünür kılmak için stratejik çözümler
+              sunuyoruz.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Araştırma -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front custom-bg arastirma">
+            <div class="card-title-bottom">Araştırma</div>
+          </div>
+          <div class="flip-card-back">
+            <h3>Pazar Araştırması ve Analizi</h3>
+            <p>
+              Doğru kararlar için sektörel analizler ve hedef kitle
+              araştırmaları yapıyoruz.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ürün -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front custom-bg urun">
+            <div class="card-title-bottom">Ürün</div>
+          </div>
+          <div class="flip-card-back">
+            <h3>Ürün Geliştirme ve Tasarım</h3>
+            <p>
+              Kahveye dair yeni ürün fikirleri ve yaratıcı tasarım desteği
+              sunuyoruz.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Etik -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front custom-bg etik">
+            <div class="card-title-bottom">Etik</div>
+          </div>
+          <div class="flip-card-back">
+            <h3>Sürdürülebilirlik ve Etik Ticaret</h3>
+            <p>
+              Doğa dostu ve adil ticaret prensipleriyle hareket etmenizi
+              sağlıyoruz.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Eğitim -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front custom-bg egitim">
+            <div class="card-title-bottom">Eğitim</div>
+          </div>
+          <div class="flip-card-back">
+            <h3>Eğitim ve Atölyeler</h3>
+            <p>
+              Kahve tadımı, kavurma ve baristalık üzerine atölyeler
+              düzenliyoruz.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tedarik -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front custom-bg tedarik">
+            <div class="card-title-bottom">Tedarik</div>
+          </div>
+          <div class="flip-card-back">
+            <h3>Tedarik Zinciri</h3>
+            <p>
+              Üreticiden son kullanıcıya kadar tüm tedarik süreçlerinizi
+              optimize ediyoruz.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" class="back-button" onclick="sayfayiKapat()">Anasayfaya Dön</a>
+
+    <script>
+      // Giriş efekti tamamlandıktan sonra içeriği göster
+      window.addEventListener("load", () => {
+        const giris = document.getElementById("girisKaplama");
+        setTimeout(() => {
+          giris.style.display = "none";
+        }, 1500);
+      });
+
+      // Çıkış animasyonu başlat
+      function sayfayiKapat() {
+        const cikis = document.getElementById("cikisKaplama");
+        cikis.classList.add("aktif");
+        setTimeout(() => {
+          window.location.href = "anasayfa.html";
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>

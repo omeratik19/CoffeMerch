@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coffeemerch | Ana Sayfa</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+            * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+            }
+
+            body {
+              font-family: "Segoe UI", sans-serif;
+              color: #7c6a52;
+              overflow-x: hidden;
+              background-color: #5c3a1d; /* 🟤 kahverengi zemin */
+            }
+
+            header {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              background: rgba(178, 109, 82, 0.9);
+              padding: 20px 40px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              z-index: 999;
+              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            }
+
+            .logo {
+              font-family: "Great Vibes", cursive;
+              font-size: 2rem;
+              color: #ffffff;
+            }
+
+            nav ul {
+              display: flex;
+              gap: 25px;
+              list-style: none;
+            }
+
+            nav a {
+              text-decoration: none;
+              color: #f4f2f0;
+              font-weight: 500;
+              transition: 0.3s;
+            }
+
+            nav a:hover {
+              color: #dad5d1;
+            }
+
+            .slider {
+              position: relative;
+              width: 100vw;
+              height: 100vh;
+              margin-top: 80px;
+              overflow: hidden;
+            }
+
+            .slides {
+              display: flex;
+              width: 300vw;
+              height: 100%;
+              transition: transform 2s ease-in-out;
+            }
+
+            .slide {
+              flex: 0 0 100vw;
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+              position: relative;
+              color: #f5f5dc;
+              background-size: cover;
+              background-position: center;
+            }
+
+            .first-slide {
+              background-image: url("img/danismanlik.png");
+            }
+
+            .third-slide {
+              background-image: url("img/gelenekslider.jpg");
+            }
+
+            .fifth-slide {
+              background-image: url("img/dogaslider.jpg");
+            }
+
+            .slide .overlay {
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: rgba(255, 255, 255, 0.2); /* opaklık arttırıldı */
+              z-index: 1;
+            }
+
+            .slide h1,
+            .slide p,
+            .slide .buttons {
+              position: relative;
+              z-index: 2;
+            }
+
+            .slide h1 {
+              font-size: 3rem;
+              color: #f5f5dc;
+              margin-bottom: 20px;
+              font-weight: 700;
+            }
+
+            .slide p {
+              font-size: 1.2rem;
+              margin-bottom: 30px;
+              color: #f5f5dc;
+              font-weight: 700;
+            }
+
+            .buttons {
+              display: flex;
+              gap: 20px;
+            }
+
+            .btn {
+              padding: 12px 24px;
+              font-size: 1rem;
+              background: #bb660c;
+              color: #eadfdf;
+              border: none;
+              border-radius: 30px;
+              cursor: pointer;
+              transition: 0.3s ease;
+            }
+
+            .btn:hover {
+              background: #d7cfc9;
+              color: #7c6a52;
+            }
+
+            #nextBtn,
+            #prevBtn {
+              position: fixed;
+              top: 50%;
+              transform: translateY(-50%);
+              background: rgba(178, 109, 82, 0.8);
+              border: none;
+              padding: 10px 15px;
+              cursor: pointer;
+              border-radius: 5px;
+              font-size: 2rem;
+              color: #f4f2f0;
+              z-index: 1000;
+              user-select: none;
+              transition: background 0.3s ease;
+            }
+
+            #nextBtn {
+              right: 20px;
+            }
+            #prevBtn {
+              left: 20px;
+            }
+
+            #nextBtn:hover,
+            #prevBtn:hover {
+              background: rgba(178, 109, 82, 1);
+            }
+
+            .footer-info {
+        margin: 0;
+        padding: 20px 0 40px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #f4f2f0;
+        background-color: #5c3a1d;
+      }
+
+            .footer-info a {
+              color: #5c3a1d
+              text-decoration: none;
+              font-weight: 500;
+            }
+
+            .footer-info img {
+              width: 18px;
+              height: 18px;
+              vertical-align: middle;
+              margin-right: 6px;
+            }
+
+            @media (max-width: 768px) {
+              .slide h1 {
+                font-size: 2rem;
+              }
+            }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">Coffeemerch</div>
+      <nav>
+        <ul>
+          <li><a href="anasayfa.html">Anasayfa</a></li>
+          <li><a href="urunler.html">Ürünler</a></li>
+          <li><a href="hizmetler.html">Hizmetler</a></li>
+          <li><a href="hakkimizda.html">Hakkımızda</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="iletisim.html">İletişim</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="slider">
+      <div class="slides" id="slides">
+        <!-- Slide 1 -->
+        <section class="slide first-slide">
+          <div class="overlay"></div>
+          <h1>Kahvenin En Saf Haliyle Tanışın</h1>
+          <p>Kahve çekirdeğinden fazlasını sunuyoruz.</p>
+          <div class="buttons">
+            <a href="urunler.html"
+              ><button class="btn">Ürünleri Keşfet</button></a
+            >
+            <a href="hizmetler.html"
+              ><button class="btn">Hizmetlerimiz</button></a
+            >
+          </div>
+        </section>
+
+        <!-- Slide 2 -->
+        <section class="slide third-slide">
+          <div class="overlay"></div>
+          <h1>Gelenekten Geleceğe</h1>
+          <p>Yüzlerce yıllık kahve kültürünü bugüne taşıyoruz.</p>
+          <div class="buttons">
+            <a href="urunler.html"
+              ><button class="btn">Ürünleri Keşfet</button></a
+            >
+            <a href="hizmetler.html"
+              ><button class="btn">Hizmetlerimiz</button></a
+            >
+          </div>
+        </section>
+
+        <!-- Slide 3 -->
+        <section class="slide fifth-slide">
+          <div class="overlay"></div>
+          <h1>Doğadan İlham Al</h1>
+          <p>Organik çekirdeklerle benzersiz lezzet.</p>
+          <div class="buttons">
+            <a href="urunler.html"
+              ><button class="btn">Ürünleri Keşfet</button></a
+            >
+            <a href="hizmetler.html"
+              ><button class="btn">Hizmetlerimiz</button></a
+            >
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <button id="prevBtn" aria-label="Önceki">‹</button>
+    <button id="nextBtn" aria-label="Sonraki">›</button>
+
+    <div class="footer-info">
+      <p>Danışmanlık ücretsizdir.</p>
+      <p>
+        Bu site <strong>Atk Codes</strong> tarafından yazılıp tasarlanmıştır.
+      </p>
+      <p>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+          alt="Instagram"
+        />
+        Instagram:
+        <a href="https://instagram.com/atkcodes" target="_blank">@atkcodes</a>
+      </p>
+    </div>
+
+    <script>
+      const slides = document.getElementById("slides");
+      const totalSlides = slides.children.length;
+      const nextBtn = document.getElementById("nextBtn");
+      const prevBtn = document.getElementById("prevBtn");
+      let currentIndex = 0;
+      let intervalId = null;
+
+      function goToSlide(index) {
+        if (index < 0) currentIndex = totalSlides - 1;
+        else if (index >= totalSlides) currentIndex = 0;
+        else currentIndex = index;
+
+        slides.style.transform = `translateX(-${currentIndex * 100}vw)`;
+      }
+
+      function nextSlide() {
+        goToSlide(currentIndex + 1);
+      }
+
+      function prevSlide() {
+        goToSlide(currentIndex - 1);
+      }
+
+      function startAutoSlide() {
+        intervalId = setInterval(nextSlide, 5000);
+      }
+
+      function resetInterval() {
+        clearInterval(intervalId);
+        startAutoSlide();
+      }
+
+      window.onload = () => {
+        goToSlide(0);
+        startAutoSlide();
+
+        nextBtn.addEventListener("click", () => {
+          nextSlide();
+          resetInterval();
+        });
+
+        prevBtn.addEventListener("click", () => {
+          prevSlide();
+          resetInterval();
+        });
+      };
+
+      window.addEventListener("resize", () => {
+        goToSlide(currentIndex);
+      });
+    </script>
+  </body>
+</html>
